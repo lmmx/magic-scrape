@@ -1,0 +1,15 @@
+[project]
+name = "magic-scrape"
+version = "0.1.0"
+description = "Automatic extraction of webpage info using OpenAI Functions validation to store a sitewide config in a web scraper."
+authors = [
+    {name = "Louis Maddox", email = "louismmx@gmail.com"},
+]
+dependencies = []
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
