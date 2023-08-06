@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import contextmanager
 from sys import stderr
 
 import defopt
@@ -42,19 +43,25 @@ class CLIConfig(ScraperConfig, APIConfig):
     """
 
 
-def main(debug: bool = False):
-    """CLI callable. The debug argument will raise errors and return the run result."""
+@contextmanager
+def cli_context(debug: bool = False):
     try:
-        config = defopt.run(CLIConfig)
-        if debug:
-            print(f"Loaded CLI config: {config}", file=stderr)
-            return config
+        yield
     except ValidationError as ve:
         if debug:
             raise
         else:
             print(ve, file=stderr)
             exit(1)
+
+
+def main(debug: bool = False):
+    """CLI callable. The debug argument will raise errors and return the run result."""
+    with cli_context(debug):
+        config = defopt.run(CLIConfig)
+        if debug:
+            print(f"Loaded CLI config: {config}", file=stderr)
+    return config if debug else None
 
 
 if __name__ == "__main__":
