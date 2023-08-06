@@ -23,3 +23,11 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 version = { source = "file", path = "src/magic_scrape/__init__.py" }
+
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=7.4.0",
+]
+
+[tool.isort]
+known_first_party = ["magic_scrape"]
