@@ -7,6 +7,7 @@ import defopt
 from pydantic import BaseModel
 
 from .config import CLIConfig, cli_config_ctx
+from .scrape import detect_selectors
 
 __all__ = ["ReturnValue", "main"]
 
@@ -31,7 +32,8 @@ def main(debug: bool = False) -> ReturnValue | None:
         config = defopt.run(CLIConfig)
         if debug:
             print(f"Loaded CLI config: {config}", file=stderr)
-    return ReturnValue(config=config) if debug else None
+    select = detect_selectors(config=config, debug=debug)
+    return ReturnValue(config=config, select=select) if debug else None
 
 
 if __name__ == "__main__":

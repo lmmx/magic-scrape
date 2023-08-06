@@ -30,6 +30,7 @@ class APIConfig(BaseModel):
 
 
 class ScraperConfig(BaseModel):
+    targets: list[str]
     url: str
 
 
@@ -39,7 +40,9 @@ class CLIConfig(ScraperConfig, APIConfig):
 
       :param openai_api_key: The OPENAI_API_KEY environment variable must be set if
                              this argument is not supplied
-      :param url: URL of the sitemap for the website to scrape.
+      :param targets: The parts to extract from each scraped web page, specified as
+                      plain English descriptions of the information
+      :param url: URL of the sitemap for the website to scrape
     """
 
 
