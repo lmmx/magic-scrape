@@ -42,13 +42,15 @@ class CLIConfig(ScraperConfig, APIConfig):
     """
 
 
-def main(throw: bool = False):
-    """CLI callable. The throw argument will raise errors (for testing)."""
+def main(debug: bool = False):
+    """CLI callable. The debug argument will raise errors and return the run result."""
     try:
         config = defopt.run(CLIConfig)
-        print(f"Loaded CLI config: {config}", file=stderr)
+        if debug:
+            print(f"Loaded CLI config: {config}", file=stderr)
+            return config
     except ValidationError as ve:
-        if throw:
+        if debug:
             raise
         else:
             print(ve, file=stderr)
