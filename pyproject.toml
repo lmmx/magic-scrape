@@ -5,10 +5,17 @@ description = "Automatic extraction of webpage info using OpenAI Functions valid
 authors = [
     {name = "Louis Maddox", email = "louismmx@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "pydantic>=2.1.1",
+    "pydantic-settings>=2.0.2",
+    "defopt>=6.4.0",
+]
 requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "MIT"}
+
+[project.scripts]
+magicscrape = "magic_scrape.cli:main"
 
 [build-system]
 requires = ["pdm-backend"]
