@@ -13,7 +13,7 @@ __all__ = [
     "APIConfig",
     "ScraperConfig",
     "CLIConfig",
-    "cli_context",
+    "cli_config_context",
     "ReturnValue",
     "main",
 ]
@@ -53,7 +53,7 @@ class CLIConfig(ScraperConfig, APIConfig):
 
 
 @contextmanager
-def cli_context(debug: bool = False) -> Iterator:
+def cli_config_context(debug: bool = False) -> Iterator:
     """
     If config parsing raises a validation error, if `debug` is True, raise them.
     If not, print error to STDERR without traceback and exit with non-zero status code.
@@ -84,7 +84,7 @@ def main(debug: Literal[False] = False) -> None:
 
 def main(debug: bool = False) -> ReturnValue | None:
     """CLI callable."""
-    with cli_context(debug):
+    with cli_config_context(debug):
         config = defopt.run(CLIConfig)
         if debug:
             print(f"Loaded CLI config: {config}", file=stderr)
