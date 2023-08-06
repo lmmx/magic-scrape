@@ -50,7 +50,7 @@ repos:
     rev: v2.0.2
     hooks:
       - id: autopep8
-        args: ["--max-line-length", "88"]
+        args: ["--in-place", "--max-line-length=88"]
   - repo: https://github.com/PyCQA/flake8
     rev: 6.1.0
     hooks:
