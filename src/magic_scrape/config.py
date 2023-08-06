@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
-from sys import stderr
 from typing import Iterator
 
 from pydantic import BaseModel, Field, ValidationError, field_validator
 from pydantic_settings import BaseSettings
+
+from .log import err
 
 __all__ = ["OpenAI", "APIConfig", "ScraperConfig", "CLIConfig", "cli_config_ctx"]
 
@@ -58,5 +59,5 @@ def cli_config_ctx(debug: bool = False) -> Iterator:
         if debug:
             raise
         else:
-            print(ve, file=stderr)
+            err(ve)
             exit(1)

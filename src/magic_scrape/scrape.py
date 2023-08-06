@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import BaseModel, Field
 
 from .config import CLIConfig
+from .log import err
 from .mock import magic_page
 
 __all__ = ["Selector", "ai_extract", "get_first_page", "detect_selectors"]
@@ -28,12 +29,17 @@ def get_first_page(sitemap_url: str) -> str:
     return magic_page  # mocked for first draft
 
 
-def detect_selectors(config: CLIConfig, debug: bool) -> list[Selector]:
+def detect_selectors(config: CLIConfig, debug: bool, verbose: bool) -> list[Selector]:
     """CLI callable."""
     selectors = []
     source_page = get_first_page(sitemap_url=config.url)
     for target in config.targets:
         detected = ai_extract(target=target, page=source_page)
         sel = Selector(target=target, css_pattern=detected)
+        if verbose:
+            if detected:
+                err(f"Found pattern {detected!r} for {target=}")
+            else:
+                err(f"No pattern found for {target=}")
         selectors.append(sel)
     return selectors
