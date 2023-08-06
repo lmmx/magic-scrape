@@ -8,7 +8,15 @@ import defopt
 from pydantic import BaseModel, Field, ValidationError, field_validator
 from pydantic_settings import BaseSettings
 
-__all__ = ["OpenAI", "APIConfig", "ScraperConfig", "CLIConfig", "cli_context", "main"]
+__all__ = [
+    "OpenAI",
+    "APIConfig",
+    "ScraperConfig",
+    "CLIConfig",
+    "cli_context",
+    "ReturnValue",
+    "main",
+]
 
 
 class OpenAI(BaseSettings):
@@ -60,8 +68,12 @@ def cli_context(debug: bool = False) -> Iterator:
             exit(1)
 
 
+class ReturnValue(BaseModel):
+    config: CLIConfig
+
+
 @overload
-def main(debug: Literal[True]) -> CLIConfig:
+def main(debug: Literal[True]) -> ReturnValue:
     ...
 
 
@@ -70,13 +82,13 @@ def main(debug: Literal[False] = False) -> None:
     ...
 
 
-def main(debug: bool = False) -> CLIConfig | None:
+def main(debug: bool = False) -> ReturnValue | None:
     """CLI callable."""
     with cli_context(debug):
         config = defopt.run(CLIConfig)
         if debug:
             print(f"Loaded CLI config: {config}", file=stderr)
-    return config if debug else None
+    return ReturnValue(config=config) if debug else None
 
 
 if __name__ == "__main__":
