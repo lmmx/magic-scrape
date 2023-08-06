@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from sys import stderr
+
 import defopt
 from pydantic import BaseModel, Field, ValidationError, field_validator
 from pydantic_settings import BaseSettings
@@ -40,12 +42,19 @@ class CLIConfig(ScraperConfig, APIConfig):
     """
 
 
-def main():
+def main(debug: bool = False):
+    """CLI callable. The debug argument will raise errors and return the run result."""
     try:
         config = defopt.run(CLIConfig)
-        print("Loaded CLI config:", config)
+        if debug:
+            print(f"Loaded CLI config: {config}", file=stderr)
+            return config
     except ValidationError as ve:
-        print(ve)
+        if debug:
+            raise
+        else:
+            print(ve, file=stderr)
+            exit(1)
 
 
 if __name__ == "__main__":
