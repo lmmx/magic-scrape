@@ -20,7 +20,10 @@ class APIConfig(BaseModel):
         try:
             return v or OpenAI().key
         except ValidationError:
-            raise ValueError("OpenAI API key is missing!")
+            raise ValueError(
+                "OpenAI API key is missing: supply the CLI argument or "
+                "set the OPENAI_API_KEY environment variable in your shell.",
+            )
 
 
 class ScraperConfig(BaseModel):
@@ -30,16 +33,20 @@ class ScraperConfig(BaseModel):
 class CLIConfig(ScraperConfig, APIConfig):
     """
     Configure both the API key auth and web scrape settings.
+
+      :param openai_api_key: The OPENAI_API_KEY environment variable must be set if
+                             this argument is not supplied
+      :param url: URL of the sitemap for the website to scrape.
     """
 
 
 def main():
-    config = defopt.run(CLIConfig)
-    print("Loaded CLI config:", config)
+    try:
+        config = defopt.run(CLIConfig)
+        print("Loaded CLI config:", config)
+    except ValidationError as ve:
+        print(ve)
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except ValidationError as ve:
-        print(ve)
+    main()
