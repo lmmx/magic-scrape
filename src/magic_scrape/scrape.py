@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import httpx
 from pydantic import BaseModel, Field
 
 from .config import CLIConfig
 from .log import err
-from .mock import magic_page
 
 __all__ = ["Selector", "ai_extract", "get_first_page", "detect_selectors"]
 
@@ -25,8 +25,12 @@ def ai_extract(target: str, page: str) -> str | None:
 
 
 def get_first_page(sitemap_url: str) -> str:
-    # TODO
-    return magic_page  # mocked for first draft
+    draft = True
+    if draft:
+        raise NotImplementedError()
+    response = httpx.get(sitemap_url)
+    first_page = response.content
+    return first_page
 
 
 def detect_selectors(config: CLIConfig, debug: bool, verbose: bool) -> list[Selector]:

@@ -1,18 +1,22 @@
-from unittest import mock
+from unittest.mock import patch
 
 import pytest
 from pytest import mark
 
 from magic_scrape.cli import CLIConfig, main
 
-# from pydantic import ValidationError
+from .data.fixtures import dummy_page
 
 
 def run_cli(*args, **env_vars):
     """Helper function to run the CLI command."""
-    with mock.patch("sys.argv", ["prog_name"] + list(args)):
-        with mock.patch.dict("os.environ", env_vars):
-            return main(debug=True)
+    with patch("sys.argv", ["prog_name"] + list(args)):
+        with patch.dict("os.environ", env_vars):
+            with patch(
+                "magic_scrape.scrape.get_first_page",
+                return_value=dummy_page,
+            ):
+                return main(debug=True)
 
 
 @mark.parametrize("key,url", [("a_key", "http://example.com")])
