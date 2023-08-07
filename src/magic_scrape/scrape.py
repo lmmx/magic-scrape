@@ -1,11 +1,8 @@
 from __future__ import annotations
 
-import re
-
 import httpx
 from pydantic import BaseModel, Field
 from pydantic_xml import BaseXmlModel, element
-from pydantic_xml.errors import ParsingError
 
 from .config import CLIConfig
 from .log import err
@@ -22,12 +19,7 @@ class Selector(BaseModel):
 
 def ai_extract(target: str, page: str) -> str | None:
     """Extract a CSS selector for the given target from the page URL content"""
-    repertoire = {
-        "animal": "body p i",
-        "clothing": "body p em",
-    }
-    magic = repertoire.get(target)
-    return magic
+    raise NotImplementedError("Insert OpenAI extraction magic here")
 
 
 class Url(BaseXmlModel, tag="url", nsmap=NSMAP):  # type: ignore[call-arg]
@@ -42,15 +34,8 @@ class UrlSet(BaseXmlModel, tag="urlset", nsmap=NSMAP):  # type: ignore[call-arg]
 def get_first_page(sitemap_url: str) -> str:
     response = httpx.get(sitemap_url)
     sitemap = response.content
-    try:
-        site_model = UrlSet.from_xml(sitemap)
-    except ParsingError as pe:
-        if match := re.search(r"\{(http[^\}]+)\}", str(pe)):
-            namespace = match.group(1)
-            err(f"Failed to parse site map, {namespace=}")
-        raise
-    else:
-        first_page = site_model.urls[0]
+    site_model = UrlSet.from_xml(sitemap)
+    first_page = site_model.urls[0]
     return first_page.loc
 
 
