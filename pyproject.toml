@@ -5,6 +5,21 @@ description = "Automatic extraction of webpage info using OpenAI Functions valid
 authors = [
     {name = "Louis Maddox", email = "louismmx@gmail.com"},
 ]
+keywords = [
+    'pydantic', 'xml', 'serialization', 'deserialization', 'parsing', 'lxml',
+]
+classifiers = [
+    "Development Status :: 1 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Topic :: Software Development :: Libraries",
+    "Internet :: WWW/HTTP",
+    'Framework :: Pydantic',
+    'Framework :: Pydantic :: 2',
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
 dependencies = [
     "pydantic>=2.1.1",
     "pydantic-settings>=2.0.2",
