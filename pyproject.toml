@@ -9,6 +9,9 @@ dependencies = [
     "pydantic>=2.1.1",
     "pydantic-settings>=2.0.2",
     "defopt>=6.4.0",
+    "httpx>=0.24.1",
+    "pydantic-xml>=2.0.0b2",
+    "lxml>=4.9.3",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -27,6 +30,7 @@ version = { source = "file", path = "src/magic_scrape/__init__.py" }
 [tool.pdm.dev-dependencies]
 test = [
     "pytest>=7.4.0",
+    "pytest-httpx>=0.23.1",
 ]
 
 [tool.isort]
