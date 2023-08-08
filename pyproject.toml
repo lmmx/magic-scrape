@@ -9,11 +9,11 @@ keywords = [
     'pydantic', 'xml', 'serialization', 'deserialization', 'parsing', 'lxml',
 ]
 classifiers = [
-    "Development Status :: 1 - Alpha",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Topic :: Software Development :: Libraries",
-    "Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP",
     'Framework :: Pydantic',
     'Framework :: Pydantic :: 2',
     "Programming Language :: Python",
