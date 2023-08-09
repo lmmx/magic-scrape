@@ -3,7 +3,7 @@ from unittest.mock import patch
 from pytest import mark
 from pytest_httpx import HTTPXMock
 
-import magic_scrape
+from magic_scrape import scrape
 from magic_scrape.scrape import Selector, detect_selectors, get_first_page
 
 from .helpers.data import target_css_mapping
@@ -12,8 +12,9 @@ from .helpers.extraction import mock_extract
 
 @mark.parametrize("target, expected", target_css_mapping.items())
 def test_ai_extract(target, expected, fake_page):
+    """Patch the extract.ai_extract function after it's impored into scrape"""
     with patch("magic_scrape.scrape.ai_extract", new=mock_extract):
-        result = magic_scrape.scrape.ai_extract(target=target, page=fake_page)
+        result = scrape.ai_extract(target=target, page=fake_page)
         assert result == expected
 
 

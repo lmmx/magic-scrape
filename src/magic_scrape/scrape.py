@@ -5,9 +5,10 @@ from pydantic import BaseModel, Field
 from pydantic_xml import BaseXmlModel, element
 
 from .config import CLIConfig
+from .extract import ai_extract
 from .log import err
 
-__all__ = ["Selector", "ai_extract", "get_first_page", "detect_selectors"]
+__all__ = ["Selector", "get_first_page", "detect_selectors"]
 
 NSMAP = {"": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
@@ -15,11 +16,6 @@ NSMAP = {"": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 class Selector(BaseModel):
     target: str = Field(..., description="Part of the web page to be extracted")
     css_pattern: str | None = Field(..., description="CSS pattern for the target")
-
-
-def ai_extract(target: str, page: str) -> str | None:
-    """Extract a CSS selector for the given target from the page URL content"""
-    raise NotImplementedError("Insert OpenAI extraction magic here")
 
 
 class Url(BaseXmlModel, tag="url", nsmap=NSMAP):  # type: ignore[call-arg]
