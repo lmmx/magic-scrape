@@ -12,11 +12,12 @@ def run_cli(*args, **kwargs):
     """Helper function to run the CLI command."""
     patched_page = kwargs.pop("patched_page")
     env_vars = kwargs
-    with patch("sys.argv", ["prog_name"] + list(args)):
-        with patch.dict("os.environ", env_vars):
-            with patch("magic_scrape.scrape.get_first_page", return_value=patched_page):
-                with patch("magic_scrape.scrape.ai_extract", new=mock_extract):
-                    return main(debug=True)
+    with patch("pydantic_settings.KeyringSettingsSource.__call__", return_value={}):
+        with patch("magic_scrape.scrape.get_first_page", return_value=patched_page):
+            with patch("magic_scrape.scrape.ai_extract", new=mock_extract):
+                with patch("sys.argv", ["prog_name"] + list(args)):
+                    with patch.dict("os.environ", env_vars):
+                        return main(debug=True)
 
 
 @mark.parametrize("key,url", [("a_key", "http://example.com")])
