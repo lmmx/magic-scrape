@@ -46,6 +46,7 @@ version = { source = "file", path = "src/magic_scrape/__init__.py" }
 test = [
     "pytest>=7.4.0",
     "pytest-httpx>=0.23.1",
+    "pytest-mock>=3.11.1",
 ]
 
 [tool.isort]
