@@ -22,7 +22,7 @@ classifiers = [
 ]
 dependencies = [
     "pydantic>=2.1.1",
-    "pydantic-settings>=2.0.2",
+    "pydantic-settings[keyring] @ git+https://github.com/lmmx/pydantic-settings.git@FEAT-keyring-settings-source",
     "defopt>=6.4.0",
     "httpx>=0.24.1",
     "pydantic-xml>=2.0.0b2",
