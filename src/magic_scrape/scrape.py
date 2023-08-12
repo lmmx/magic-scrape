@@ -35,14 +35,14 @@ def get_first_page(sitemap_url: str) -> str:
     return first_page.loc
 
 
-def detect_selectors(config: CLIConfig, debug: bool, verbose: bool) -> list[Selector]:
+def detect_selectors(config: CLIConfig, debug: bool) -> list[Selector]:
     """CLI callable."""
     selectors = []
     source_page = get_first_page(sitemap_url=config.url)
     for target in config.targets:
         detected = ai_extract(target=target, page=source_page)
         sel = Selector(target=target, css_pattern=detected)
-        if verbose:
+        if config.verbose:
             if detected:
                 err(f"Found pattern {detected!r} for {target=}")
             else:

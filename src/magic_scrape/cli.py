@@ -27,15 +27,14 @@ def main(debug: Literal[False] = False) -> None:
     ...
 
 
-def main(debug: bool = False, verbose: bool = False) -> ReturnValue | None:
+def main(debug: bool = False) -> ReturnValue | None:
     """CLI callable."""
-    verbose = True
     with cli_config_ctx(debug):
         config = defopt.run(CLIConfig)
-        if verbose:
+        if config.verbose:
             err(f"Loaded CLI config: {config}")
-    select = detect_selectors(config=config, debug=debug, verbose=verbose)
-    if verbose:
+    select = detect_selectors(config=config, debug=debug)
+    if config.verbose:
         err(f"Produced result: {select}")
     ret = ReturnValue(config=config, select=select)
     return ret if debug else None

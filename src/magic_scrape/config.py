@@ -8,7 +8,14 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .log import err
 
-__all__ = ["OpenAI", "APIConfig", "ScraperConfig", "CLIConfig", "cli_config_ctx"]
+__all__ = [
+    "OpenAI",
+    "APIConfig",
+    "ScraperConfig",
+    "DebugConfig",
+    "CLIConfig",
+    "cli_config_ctx",
+]
 
 
 class OpenAI(BaseSettings):
@@ -36,7 +43,11 @@ class ScraperConfig(BaseModel):
     url: str
 
 
-class CLIConfig(ScraperConfig, APIConfig):
+class DebugConfig(BaseModel):
+    verbose: bool = False
+
+
+class CLIConfig(DebugConfig, ScraperConfig, APIConfig):
     """
     Configure both the API key auth and web scrape settings.
 

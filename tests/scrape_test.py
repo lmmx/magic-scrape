@@ -21,7 +21,7 @@ def test_detect_selectors(target, expected, fake_page, fake_config, mocker):
     fake_config.targets = [target]
     mocker.patch("magic_scrape.scrape.get_first_page", return_value=fake_page)
     mocker.patch("magic_scrape.scrape.ai_extract", new=mock_extract)
-    result = detect_selectors(config=fake_config, debug=False, verbose=False)
+    result = detect_selectors(config=fake_config, debug=False)
     assert result == [Selector(target=target, css_pattern=expected)]
 
 
