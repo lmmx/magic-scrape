@@ -18,13 +18,11 @@ class ReturnValue(BaseModel):
 
 
 @overload
-def main(debug: Literal[True]) -> ReturnValue:
-    ...
+def main(debug: Literal[True]) -> ReturnValue: ...
 
 
 @overload
-def main(debug: Literal[False] = False) -> None:
-    ...
+def main(debug: Literal[False] = False) -> None: ...
 
 
 def main(debug: bool = False, verbose: bool = False) -> ReturnValue | None:
