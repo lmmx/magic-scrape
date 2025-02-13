@@ -1,52 +1,62 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
 [project]
 name = "magic-scrape"
 dynamic = ["version"]
 description = "Automatic extraction of webpage info using OpenAI Functions validation to store a sitewide config in a web scraper."
 authors = [
-    {name = "Louis Maddox", email = "louismmx@gmail.com"},
+  {name = "Louis Maddox", email = "louismmx@gmail.com"}
 ]
 keywords = [
-    'pydantic', 'xml', 'serialization', 'deserialization', 'parsing', 'lxml',
+  'pydantic',
+  'xml',
+  'serialization',
+  'deserialization',
+  'parsing',
+  'lxml'
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "Natural Language :: English",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: Internet :: WWW/HTTP",
-    'Framework :: Pydantic',
-    'Framework :: Pydantic :: 2',
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Natural Language :: English",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Internet :: WWW/HTTP",
+  'Framework :: Pydantic',
+  'Framework :: Pydantic :: 2',
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11"
 ]
 dependencies = [
-    "pydantic>=2.1.1",
-    "pydantic-settings>=2.0.2",
-    "defopt>=6.4.0",
-    "httpx>=0.24.1",
-    "pydantic-xml>=2.0.0b2",
-    "lxml>=4.9.3",
+  "pydantic>=2.1.1",
+  "pydantic-settings>=2.0.2",
+  "defopt>=6.4.0",
+  "httpx>=0.24.1",
+  "pydantic-xml>=2.0.0b2",
+  "lxml>=4.9.3"
 ]
 requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "MIT"}
 
+[project.optional-dependencies]
+dev = [
+  "pre-commit>=4.1.0"
+]
+
 [project.scripts]
 magicscrape = "magic_scrape.cli:main"
 
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
+[tool.isort]
+known_first_party = ["magic_scrape"]
 
 [tool.pdm]
-version = { source = "file", path = "src/magic_scrape/__init__.py" }
+version = {source = "file", path = "src/magic_scrape/__init__.py"}
 
 [tool.pdm.dev-dependencies]
 test = [
-    "pytest>=7.4.0",
-    "pytest-httpx>=0.23.1",
+  "pytest>=7.4.0",
+  "pytest-httpx>=0.23.1"
 ]
-
-[tool.isort]
-known_first_party = ["magic_scrape"]
